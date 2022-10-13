@@ -68,10 +68,10 @@ class Hangman:
         Interface for letting user guess next empty character.
         """
         print(" ".join(self.fruit_with_blanks))
-        guess = input(f"Guess next({self.position + 1}th) character: ")
+        guess = input(f"Guess next({self.position + 1}th) character: ").lower()
         if guess == self.fruit[self.position]:
             print("Correct guess!")
-            
+
             # updating self.fruit_with_blanks
             self.fruit_with_blanks[self.position] = self.fruit[self.position]
 
