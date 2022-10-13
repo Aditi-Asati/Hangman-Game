@@ -13,10 +13,12 @@ def get_fruits() -> list[str]:
         content = fruits.read().split()
         return content
 
+
 class Hangman:
     """
     Base game class.
     """
+
     def __init__(self) -> None:
         self.fruit = random.choice(get_fruits())
 
@@ -32,7 +34,6 @@ class Hangman:
 
         self.position = self.fruit_with_blanks.index("_")
         self.chances = len(self.fruit)
-
 
     @staticmethod
     def decide_positions_to_show(fruit: str) -> list[int]:
@@ -71,7 +72,7 @@ class Hangman:
                 self.position = self.fruit_with_blanks.index("_")
             # try-except because when game is finished, there are no `_`
             # and hence index method returns an error
-            except Exception: 
+            except Exception:
                 pass
 
         else:
@@ -98,6 +99,7 @@ class Hangman:
             print("You lost the game!")
 
         print(f"The fruit name was `{self.fruit}`.")
+
 
 if __name__ == "__main__":
     game = Hangman()
