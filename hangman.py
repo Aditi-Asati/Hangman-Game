@@ -27,11 +27,15 @@ class Hangman:
         # indices will be filled with underscores
         positions_to_show = self.decide_positions_to_show(self.fruit)
 
+        # running a list comprehension which basically
+        # includes indices of self.fruit which are in positions_to_show
+        # and replaces rest of the characters with _
         self.fruit_with_blanks = [
             self.fruit[i] if i in positions_to_show else "_"
             for i in range(0, len(self.fruit))
         ]
 
+		# determining the first _, i.e., the first position to guess
         self.position = self.fruit_with_blanks.index("_")
         self.chances = len(self.fruit)
 
@@ -51,6 +55,7 @@ class Hangman:
             # length-1 cuz randint is inclusive
             idx = random.randint(0, length - 1)
 
+			# while loop to ensure non duplicate index
             while idx in indices:
                 idx = random.randint(0, length - 1)
 
@@ -62,7 +67,7 @@ class Hangman:
         """
         Interface for letting user guess next empty character.
         """
-        print("".join(self.fruit_with_blanks))
+        print(" ".join(self.fruit_with_blanks))
         guess = input(f"Guess next({self.position + 1}th) character: ")
         if guess == self.fruit[self.position]:
             print("Correct guess!")
@@ -93,6 +98,7 @@ class Hangman:
         print(f"Total number of chances to guess the fruit name: {self.chances}.")
         print("\n-----------------------------------------\n")
 
+        # run until there is an `_` present and chances are left
         while "_" in self.fruit_with_blanks and self.chances > 0:
             self.guess_next_char()
 
