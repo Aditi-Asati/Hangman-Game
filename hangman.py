@@ -66,11 +66,14 @@ class Hangman:
         guess = input(f"Guess next({self.position + 1}th) character: ")
         if guess == self.fruit[self.position]:
             print("Correct guess!")
+            
+            # updating self.fruit_with_blanks
             self.fruit_with_blanks[self.position] = self.fruit[self.position]
 
             try:
                 self.position = self.fruit_with_blanks.index("_")
-            # try-except because when game is finished, there are no `_`
+            # passing except here because when game is finished,
+            # there are no `_` present if self.fruit_with_blanks
             # and hence index method returns an error
             except Exception:
                 pass
