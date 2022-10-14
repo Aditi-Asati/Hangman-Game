@@ -36,7 +36,7 @@ class Hangman:
             for i in range(0, len(self.fruit))
         ]
 
-		# determining the first _, i.e., the first position to guess
+        # determining the first _, i.e., the first position to guess
         self.position = self.fruit_with_blanks.index("_")
         self.chances = len(self.fruit)
 
@@ -56,7 +56,7 @@ class Hangman:
             # length-1 cuz randint is inclusive
             idx = random.randint(0, length - 1)
 
-			# while loop to ensure non duplicate index
+            # while loop to ensure non duplicate index
             while idx in indices:
                 idx = random.randint(0, length - 1)
 
@@ -70,7 +70,9 @@ class Hangman:
         """
         print(" ".join(self.fruit_with_blanks))
         try:
-            guess = input_with_timeout(f"Guess next({self.position + 1}th) character: ", 5)
+            guess = input_with_timeout(
+                f"Guess next({self.position + 1}th) character: ", 15
+            )
         except TimeoutExpired:
             print("\nTimeout!")
             self.chances -= 1
