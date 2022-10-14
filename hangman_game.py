@@ -6,18 +6,18 @@ from threading import Event
 import concurrent.futures
 from pynput.keyboard import Key, Controller
 
+
 class Hangman:
     """
     Randomly chooses a fruit from the fruits list and decides
     the number of attempts based on the length of the fruit
     """
+
     def __init__(self, fruits_list: list) -> None:
 
         self.fruit = random.choice(fruits_list)
         self.attempts = 2 + len(self.fruit)
 
-
-    
     def positionView(self, guess: str, fruit: str) -> bool:
         """
         Shows the location of the letter if its present in the fruit name
@@ -25,16 +25,16 @@ class Hangman:
         guess = guess.lower()
         fruit = fruit.lower()
 
-        show = ["X"]*len(fruit)
+        show = ["X"] * len(fruit)
         flag = False
         if fruit.count(guess) > 1:
             for i in range(len(fruit)):
-                if fruit.find(guess, i, i+1) == i:
+                if fruit.find(guess, i, i + 1) == i:
                     show[i] = guess
             print(f"You guessed the right letter!\n{show}")
 
         elif fruit.count(guess) == 1:
-            a = fruit.find(guess) 
+            a = fruit.find(guess)
             show[a] = guess
             print(f"You guessed the right letter!\n{show}")
 
@@ -44,27 +44,25 @@ class Hangman:
 
         return flag
 
-    
     def playGame(self, attempts: int, fruit: str):
 
-            
         i = 0
         while i < attempts:
 
             @staticmethod
             def taking_input() -> str:
 
-                guess = input("Guess the letter:")   
+                guess = input("Guess the letter:")
 
                 return guess
 
             @staticmethod
             def timer(event):
-        
+
                 for _ in range(5):
                     time.sleep(1)
                     if event.is_set():
-                        return 
+                        return
                 else:
                     keyboard = Controller()
                     keyboard.press(Key.enter)
@@ -94,11 +92,51 @@ class Hangman:
 
 print("Welcome to the Hangman Game!!\n\n********\nYou have to guess a fruit name!\n")
 print("Rules of the game are as follows:\n")
-print("1. When a letter in that word is guessed correctly, that letter position in the word is made visible. In this way, all letters of the word are to be guessed before all the chances are over.")
+print(
+    "1. When a letter in that word is guessed correctly, that letter position in the word is made visible. In this way, all letters of the word are to be guessed before all the chances are over."
+)
 print("2. For convenience, we have given length of word to be guessed + 2 chances")
-print("3. The chances are decreased by one only if player's guess is WRONG. If the guess is right, player's chance is not reduced")
+print(
+    "3. The chances are decreased by one only if player's guess is WRONG. If the guess is right, player's chance is not reduced"
+)
 print("4. If you dont guess in 5 secs, you will be disqualified from the game!")
-fruits_list = ["Apple", "Avocado", "Apricots", "Banana", "Blackberries", "Blackcurrant", "Breadfruit", "Blueberries", "Carambola", "Cherries", "Cranberries", "CustardApple", "Grapes", "Guava", "HoneydewMelon", "Jackfruit", "Javaplum", "Kivifruit", "Lemon", "Lychee", "Mango", "Mulberries", "Orange", "Papaya", "Peaches", "Pear", "PassionFruit", "Pineapple", "Dragonfruit", "Pomegranate", "Rasberries", "Sapodilla", "Roseapple", "Strawberries", "Tamarind", "Watermelon"]
+fruits_list = [
+    "Apple",
+    "Avocado",
+    "Apricots",
+    "Banana",
+    "Blackberries",
+    "Blackcurrant",
+    "Breadfruit",
+    "Blueberries",
+    "Carambola",
+    "Cherries",
+    "Cranberries",
+    "CustardApple",
+    "Grapes",
+    "Guava",
+    "HoneydewMelon",
+    "Jackfruit",
+    "Javaplum",
+    "Kivifruit",
+    "Lemon",
+    "Lychee",
+    "Mango",
+    "Mulberries",
+    "Orange",
+    "Papaya",
+    "Peaches",
+    "Pear",
+    "PassionFruit",
+    "Pineapple",
+    "Dragonfruit",
+    "Pomegranate",
+    "Rasberries",
+    "Sapodilla",
+    "Roseapple",
+    "Strawberries",
+    "Tamarind",
+    "Watermelon",
+]
 player = Hangman(fruits_list)
 player.playGame(player.attempts, player.fruit)
-
