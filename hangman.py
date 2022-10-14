@@ -3,6 +3,7 @@ Rewrite of hangman_game.py
 """
 
 import random
+from utils import input_with_timeout, TimeoutExpired
 
 
 def get_fruits() -> list[str]:
@@ -68,8 +69,16 @@ class Hangman:
         Interface for letting user guess next empty character.
         """
         print(" ".join(self.fruit_with_blanks))
-        guess = input(f"Guess next({self.position + 1}th) character: ").lower()
-        if guess == self.fruit[self.position]:
+        try:
+            guess = input_with_timeout(f"Guess next({self.position + 1}th) character: ", 5)
+        except TimeoutExpired:
+            print("\nTimeout!")
+            self.chances -= 1
+            print(f"Remaining chances: {self.chances}")
+            print("\n------------------------------\n")
+            return
+
+        if guess.lower() == self.fruit[self.position]:
             print("Correct guess!")
 
             # updating self.fruit_with_blanks
@@ -79,8 +88,8 @@ class Hangman:
                 self.position = self.fruit_with_blanks.index("_")
             # passing except here because when game is finished,
             # there are no `_` present if self.fruit_with_blanks
-            # and hence index method returns an error
-            except Exception:
+            # and hence index method returns a value error
+            except ValueError:
                 pass
 
         else:
@@ -95,7 +104,9 @@ class Hangman:
         Main game loop.
         """
         print("Welcome to the Hangman game.")
+        print("You'll be alloted only 15s to guess.")
         print(f"Total number of chances to guess the fruit name: {self.chances}.")
+        input("Press enter to start the game.")
         print("\n-----------------------------------------\n")
 
         # run until there is an `_` present and chances are left
